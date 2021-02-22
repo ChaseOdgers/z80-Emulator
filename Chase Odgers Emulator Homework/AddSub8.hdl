@@ -1,0 +1,34 @@
+// This file is based on
+// the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+
+/**
+ * Adds or Subtract two 8-bit values.
+ * The most significant carry bit is ignored.
+ * if sub = 0 out = a+b
+ * if sub = 1 out = a-b
+ */
+
+CHIP AddSub8 {
+    IN a[8], b[8], sub;
+    OUT out[8];
+
+    PARTS:
+    Xor(a=sub , b=false, out=cin);
+    Xor(a=sub , b=b[0] , out=s0 );
+    Xor(a=sub , b=b[1] , out=s1 );
+    Xor(a=sub , b=b[2] , out=s2 );
+    Xor(a=sub , b=b[3] , out=s3 );
+    Xor(a=sub , b=b[4] , out=s4 );
+    Xor(a=sub , b=b[5] , out=s5 );
+    Xor(a=sub , b=b[6] , out=s6 );
+    Xor(a=sub , b=b[7] , out=s7 );
+    FullAdder(a=a[0], b=s0, c=cin, sum=out[0], carry=carry0);
+    FullAdder(a=a[1], b=s1, c=carry0, sum=out[1], carry=carry1);
+    FullAdder(a=a[2], b=s2, c=carry1, sum=out[2], carry=carry2);
+    FullAdder(a=a[3], b=s3, c=carry2, sum=out[3], carry=carry3);
+    FullAdder(a=a[4], b=s4, c=carry3, sum=out[4], carry=carry4);
+    FullAdder(a=a[5], b=s5, c=carry4, sum=out[5], carry=carry5);
+    FullAdder(a=a[6], b=s6, c=carry5, sum=out[6], carry=carry6);
+    FullAdder(a=a[7], b=s7, c=carry6, sum=out[7], carry=carry7);
+}

@@ -1,0 +1,27 @@
+// This file is based on
+// the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+
+/**
+ * 8-way 8-bit multiplexor:
+ * out = a if sel == 000
+ *       b if sel == 001
+ *       etc.
+ *       h if sel == 111
+ */
+
+CHIP Mux8Way8 {
+    IN a[8], b[8], c[8], d[8],
+       e[8], f[8], g[8], h[8],
+       sel[3];
+    OUT out[8];
+
+    PARTS:
+    Mux8(a=a,b=b,sel=sel[0],out=q);
+    Mux8(a=c,b=d,sel=sel[0],out=r);
+    Mux8(a=e,b=f,sel=sel[0],out=s);
+    Mux8(a=g,b=h,sel=sel[0],out=t);
+    Mux8(a=q,b=r,sel=sel[1],out=y);
+    Mux8(a=s,b=t,sel=sel[1],out=z);
+    Mux8(a=y,b=z,sel=sel[2],out=out);
+}
